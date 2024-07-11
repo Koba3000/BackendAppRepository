@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/question/v2")
+@RequestMapping("/question")
 @RequiredArgsConstructor
 @Validated
 public class QuestionController {

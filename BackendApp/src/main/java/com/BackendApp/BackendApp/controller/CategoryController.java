@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category/v1")
+@RequestMapping("/category")
 @RequiredArgsConstructor
 @Validated
 public class CategoryController {
@@ -40,8 +40,14 @@ public class CategoryController {
         return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
+//    @PutMapping("/")
+//    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
+//        return ResponseEntity.ok().body(categoryService.updateCategory(category));
+//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category category) {
+        category.setId(id);
         return ResponseEntity.ok().body(categoryService.updateCategory(category));
     }
 
