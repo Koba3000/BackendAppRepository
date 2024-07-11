@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -35,15 +34,10 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.getCategoryById(id));
     }
 
-//    @PostMapping
-//    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-//        Category savedCategory = categoryService.saveCategory(category);
-//        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
-//    }
-
     @PostMapping("/")
-    public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
-        return ResponseEntity.ok().body(categoryService.saveCategory(category));
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+        Category savedCategory = categoryService.saveCategory(category);
+        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
 
     @PutMapping("/")

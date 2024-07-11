@@ -1,5 +1,7 @@
 package com.BackendApp.BackendApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,10 +23,19 @@ public class Question {
     private Integer id;
     private String name;
 
+//    @ManyToOne
+//    @JoinColumn(name = "category_id")
+//    private Category category;
+//
+//    @OneToMany(mappedBy = "question")
+//    private List<Answer> answers;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonBackReference
     private Category category;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Answer> answers;
 }

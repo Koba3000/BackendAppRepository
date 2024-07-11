@@ -1,5 +1,6 @@
 package com.BackendApp.BackendApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,12 @@ public class Answer {
     private String title;
     private Boolean isCorrect;
 
+//    @ManyToOne
+//    @JoinColumn(name = "question_id")
+//    private Question question;
+
     @ManyToOne
     @JoinColumn(name = "question_id")
+    @JsonBackReference
     private Question question;
 }

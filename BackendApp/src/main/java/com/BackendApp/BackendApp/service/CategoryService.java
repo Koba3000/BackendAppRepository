@@ -4,6 +4,8 @@ import com.BackendApp.BackendApp.model.Answer;
 import com.BackendApp.BackendApp.model.Category;
 import com.BackendApp.BackendApp.model.Question;
 import com.BackendApp.BackendApp.repository.CategoryRepo;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,22 +36,22 @@ public class CategoryService {
         return null;
     }
 
+    @Transactional
     public Category saveCategory(Category category) {
-        Category savedCategory = categoryRepo.save(category);
-        log.info("Category with id: {} saved successfully", category.getId());
-        return savedCategory;
+        // Ensure bidirectional relationships are set
+        if (category.getQuestions() != null) {
+            for (Question question : category.getQuestions()) {
+                question.setCategory(category); // Set the category for each question
+                if (question.getAnswers() != null) {
+                    for (Answer answer : question.getAnswers()) {
+                        answer.setQuestion(question); // Set the question for each answer
+                    }
+                }
+            }
+        }
+        return categoryRepo.save(category);
     }
 
-//    @Transactional
-//    public Category saveCategory(Category category) {
-//        for (Question question : category.getQuestions()) {
-//            question.setCategory(category);
-//            for (Answer answer : question.getAnswers()) {
-//                answer.setQuestion(question);
-//            }
-//        }
-//        return categoryRepo.save(category);
-//    }
 
     public Category updateCategory(Category category) {
         Optional<Category> existingCategory = categoryRepo.findById(category.getId());
