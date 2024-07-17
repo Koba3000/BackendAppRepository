@@ -20,9 +20,6 @@ public class Category {
     private Integer id;
     private String name;
 
-//    @OneToMany(mappedBy = "category")
-//    private List<Question> questions;
-
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Question> questions;

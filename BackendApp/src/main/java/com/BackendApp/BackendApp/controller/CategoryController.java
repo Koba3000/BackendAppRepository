@@ -35,15 +35,14 @@ public class CategoryController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        Category savedCategory = categoryService.saveCategory(category);
-        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
+    public ResponseEntity<?> createCategory(@RequestBody Category category) {
+        try {
+            Category savedCategory = categoryService.saveCategory(category);
+            return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
-
-//    @PutMapping("/")
-//    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
-//        return ResponseEntity.ok().body(categoryService.updateCategory(category));
-//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category category) {

@@ -38,6 +38,10 @@ public class CategoryService {
 
     @Transactional
     public Category saveCategory(Category category) {
+        if (categoryRepo.findByName(category.getName()).isPresent()) {
+            // Throw an exception or handle it as you see fit
+            throw new IllegalStateException("Category with name " + category.getName() + " already exists.");
+        }
         // Ensure bidirectional relationships are set
         if (category.getQuestions() != null) {
             for (Question question : category.getQuestions()) {
