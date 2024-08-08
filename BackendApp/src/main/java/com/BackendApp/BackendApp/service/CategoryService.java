@@ -20,7 +20,6 @@ import java.util.Optional;
 @Slf4j
 public class CategoryService {
 
-    @Autowired
     private final CategoryRepo categoryRepo;
 
     public List<Category> getAllCategories() {

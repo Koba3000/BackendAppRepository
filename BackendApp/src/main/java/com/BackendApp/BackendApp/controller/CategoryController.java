@@ -16,8 +16,7 @@ import java.util.List;
 @Validated
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping("/")
     public ResponseEntity<List<Category>> getAllCategories() {
@@ -45,9 +44,9 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category category) {
+    public Category updateCategory(@PathVariable Integer id, @RequestBody Category category) {
         category.setId(id);
-        return ResponseEntity.ok().body(categoryService.updateCategory(category));
+        return categoryService.updateCategory(category);
     }
 
     @DeleteMapping("/{id}")
